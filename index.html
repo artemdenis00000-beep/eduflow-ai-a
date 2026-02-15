@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EduFlow | Полная Версия</title>
+    <title>EduFlow | Без VPN</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
@@ -25,7 +25,7 @@
             <button onclick="showTab('store')" class="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-slate-800 transition">⚡ Магазин</button>
         </nav>
         <div class="absolute bottom-8 left-6 right-6 p-4 bg-slate-800 rounded-2xl border border-slate-700">
-            <p class="text-[10px] uppercase font-bold text-slate-500 mb-1">Баланс:</p>
+            <p class="text-[10px] uppercase font-bold text-slate-500 mb-1">Доступно:</p>
             <p class="text-xl font-bold text-indigo-400"><span id="balance-display">0</span> мин.</p>
         </div>
     </aside>
@@ -35,45 +35,47 @@
         <section id="dashboard" class="tab-content active">
             <h1 class="text-3xl font-black text-slate-900 mb-8">Мои Курсы</h1>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="glass-card p-8 rounded-3xl cursor-pointer" onclick="startLesson('Математика', 'Киберпанк')">
+                <div class="glass-card p-8 rounded-3xl cursor-pointer" onclick="startLesson('Математика', 'Космос')">
                     <span class="text-5xl">🧮</span>
                     <h3 class="text-2xl font-bold mt-4">Математика</h3>
-                    <p class="text-slate-500">Сеттинг: Неоновый город</p>
+                    <p class="text-slate-500">Сеттинг: Космическая станция</p>
                 </div>
-                <div class="glass-card p-8 rounded-3xl cursor-pointer" onclick="startLesson('История', 'Древний Рим')">
+                <div class="glass-card p-8 rounded-3xl cursor-pointer" onclick="startLesson('История', 'Древний Египет')">
                     <span class="text-5xl">🏛️</span>
                     <h3 class="text-2xl font-bold mt-4">История</h3>
-                    <p class="text-slate-500">Сеттинг: Легионы Империи</p>
+                    <p class="text-slate-500">Сеттинг: Пирамиды и загадки</p>
                 </div>
             </div>
         </section>
 
         <section id="profile" class="tab-content">
             <div class="max-w-2xl bg-white p-10 rounded-[2.5rem] shadow-sm border">
-                <h2 class="text-2xl font-bold mb-6">Данные Ученика</h2>
+                <h2 class="text-2xl font-bold mb-6">Настройки</h2>
                 <div class="space-y-4">
-                    <input type="password" id="api-key" class="w-full p-4 bg-slate-50 rounded-xl outline-none ring-1 ring-slate-200" placeholder="API Ключ Gemini">
+                    <label class="text-xs font-bold text-slate-400 uppercase">API Ключ Gemini</label>
+                    <input type="password" id="api-key" class="w-full p-4 bg-slate-50 rounded-xl outline-none ring-1 ring-slate-200" placeholder="Вставь ключ">
                     <div class="grid grid-cols-2 gap-4">
                         <input type="number" id="user-age" class="p-4 bg-slate-50 rounded-xl outline-none ring-1 ring-slate-200" placeholder="Возраст">
                         <input type="text" id="user-grade" class="p-4 bg-slate-50 rounded-xl outline-none ring-1 ring-slate-200" placeholder="Класс">
                     </div>
-                    <input type="text" id="user-interests" class="w-full p-4 bg-slate-50 rounded-xl outline-none ring-1 ring-slate-200" placeholder="Интересы (через запятую)">
+                    <input type="text" id="user-interests" class="w-full p-4 bg-slate-50 rounded-xl outline-none ring-1 ring-slate-200" placeholder="Что ты любишь?">
                     <button onclick="saveProfile()" class="w-full py-4 bg-slate-900 text-white rounded-2xl font-bold">СОХРАНИТЬ</button>
                 </div>
             </div>
         </section>
 
         <section id="store" class="tab-content">
-            <div class="max-w-sm mx-auto glass-card p-10 rounded-[3rem] text-center border-2 border-indigo-500">
-                <h3 class="text-xl font-bold mb-2 uppercase">1 Час Обучения</h3>
-                <p class="text-5xl font-black mb-8">400 ₽</p>
-                <button onclick="processPayment()" class="w-full py-4 bg-indigo-600 text-white rounded-2xl font-bold">ПОПОЛНИТЬ</button>
+            <div class="max-w-sm mx-auto glass-card p-10 rounded-[3rem] text-center border-2 border-indigo-500 shadow-xl">
+                <h3 class="text-xl font-bold mb-2">ПОПОЛНИТЬ БАЛАНС</h3>
+                <p class="text-5xl font-black mb-8 italic text-slate-900">400 ₽</p>
+                <button onclick="processPayment()" class="w-full py-4 bg-indigo-600 text-white rounded-2xl font-bold">ДОБАВИТЬ 60 МИНУТ</button>
             </div>
         </section>
 
         <section id="loading" class="tab-content text-center py-20">
             <div class="loader ease-linear rounded-full border-8 border-t-8 border-slate-200 h-24 w-24 mb-8 mx-auto"></div>
-            <h2 class="text-2xl font-bold text-slate-900">Связь с ИИ...</h2>
+            <h2 class="text-2xl font-bold text-slate-900">Прокси-сервер обходит блокировки...</h2>
+            <p class="text-slate-400 mt-2">VPN больше не нужен!</p>
         </section>
 
         <section id="learning" class="tab-content">
@@ -81,8 +83,8 @@
                 <h2 id="ai-quest-title" class="text-4xl font-black mb-6 italic text-slate-900"></h2>
                 <div id="ai-content" class="text-xl text-slate-600 leading-relaxed mb-10"></div>
                 <div class="flex gap-4">
-                    <input type="text" id="ans" class="flex-1 bg-slate-50 p-4 rounded-2xl outline-none border" placeholder="Введи число...">
-                    <button onclick="checkAnswer()" class="bg-slate-900 text-white px-10 rounded-2xl font-bold hover:bg-indigo-600 transition">ПРОВЕРИТЬ</button>
+                    <input type="text" id="ans" class="flex-1 bg-slate-50 p-4 rounded-2xl outline-none border focus:ring-2 ring-indigo-400" placeholder="Ответ...">
+                    <button onclick="checkAnswer()" class="bg-slate-900 text-white px-10 rounded-2xl font-bold hover:bg-indigo-600 transition">ОТВЕТИТЬ</button>
                 </div>
             </div>
         </section>
@@ -113,7 +115,7 @@
                 interests: document.getElementById('user-interests').value
             }));
             localStorage.setItem('gemini_key', document.getElementById('api-key').value.trim());
-            alert("Данные сохранены!");
+            alert("Настройки сохранены!");
             showTab('dashboard');
         }
 
@@ -121,50 +123,53 @@
             balance += 60;
             localStorage.setItem('user_balance', balance);
             document.getElementById('balance-display').innerText = balance;
-            alert("Баланс пополнен на 60 мин!");
+            alert("Баланс: +60 минут!");
             showTab('dashboard');
         }
 
-        // Авто-поиск модели, чтобы не было ошибки 404
-        async function fetchModels(key) {
-            const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${key}`);
-            const data = await res.json();
-            if (!data.models) throw new Error("Ключ не работает или VPN выключен");
+        // Ключевая функция обхода блокировок
+        async function getAiResponse(key, promptText) {
+            // Список моделей для проверки
+            const models = ["gemini-1.5-flash", "gemini-1.5-pro", "gemini-pro"];
             
-            // Пытаемся найти любую версию flash (3 или 1.5)
-            const flash = data.models.find(m => m.name.includes("flash") && m.supportedGenerationMethods.includes("generateContent"));
-            return flash ? flash.name.split('/').pop() : "gemini-pro";
+            for (let model of models) {
+                try {
+                    // Используем прокси-сервер corsproxy.io
+                    const targetUrl = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${key}`;
+                    const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(targetUrl)}`;
+
+                    const res = await fetch(proxyUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ contents: [{ parts: [{ text: promptText }] }] })
+                    });
+
+                    if (res.ok) {
+                        const data = await res.json();
+                        if (data.candidates && data.candidates[0]) return data;
+                    }
+                } catch (e) {
+                    console.warn(`Модель ${model} не подошла, пробую следующую...`);
+                }
+            }
+            throw new Error("Ни одна модель не ответила. Проверь ключ или прокси.");
         }
 
         async function startLesson(subject, setting) {
             const key = localStorage.getItem('gemini_key');
             const profile = JSON.parse(localStorage.getItem('user_profile')) || {};
-            
-            if (!key) return alert("Вставь API-ключ в профиле!");
+
+            if (!key) return alert("Вставь API-ключ!");
             if (balance <= 0) return showTab('store');
 
             showTab('loading');
 
+            const prompt = `Ты ИИ репетитор. Создай квест для ученика ${profile.age} лет. 
+                            Предмет: ${subject}. Сеттинг: ${setting}. 
+                            Выдай ТОЛЬКО JSON: {"title": "Название", "text": "Сюжет и ОДНА задача (ответ число)", "answer": "число"}`;
+
             try {
-                const modelName = await fetchModels(key);
-                const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${key}`;
-                
-                const prompt = `Ты ИИ репетитор. Создай квест для ученика ${profile.age} лет. Предмет: ${subject}. Сеттинг: ${setting}. 
-                                Ответь ТОЛЬКО JSON: {"title": "Название", "text": "Текст и задача", "answer": "число"}`;
-
-                const response = await fetch(url, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
-                });
-
-                const data = await response.json();
-                
-                // Исправляем ошибку "reading 0" - проверяем, есть ли ответ
-                if (!data.candidates || data.candidates.length === 0) {
-                    throw new Error("ИИ не ответил. Попробуй другой VPN.");
-                }
-
+                const data = await getAiResponse(key, prompt);
                 const rawText = data.candidates[0].content.parts[0].text;
                 const cleanJson = JSON.parse(rawText.replace(/```json|```/gi, "").trim());
 
@@ -174,18 +179,18 @@
                 
                 showTab('learning');
             } catch (e) {
-                alert("Ошибка: " + e.message);
-                showTab('profile');
+                alert("Ошибка ИИ: " + e.message + "\nПопробуй нажать еще раз через 5 секунд.");
+                showTab('dashboard');
             }
         }
 
         function checkAnswer() {
             if (document.getElementById('ans').value.trim() === correctAnswer) {
-                alert("Верно! +10 опыта");
+                alert("КРУТО! Правильно.");
                 showTab('dashboard');
                 document.getElementById('ans').value = "";
             } else {
-                alert("Неа, попробуй еще раз!");
+                alert("Ошибка! Подумай еще.");
             }
         }
     </script>
