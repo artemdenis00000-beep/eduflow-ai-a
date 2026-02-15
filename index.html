@@ -3,109 +3,105 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EduFlow Pro | Anti-Block Edition</title>
+    <title>EduFlow | Работает без VPN</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; background-color: #f1f5f9; }
         .tab-content { display: none; }
         .tab-content.active { display: block; }
-        .loader { border-top-color: #6366f1; animation: spinner 1.5s linear infinite; }
-        @keyframes spinner { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        #debug-log { font-family: monospace; font-size: 10px; max-height: 100px; overflow-y: auto; }
+        .btn-main { background: #111827; color: white; transition: all 0.2s; border-radius: 1rem; }
+        .btn-main:hover { background: #4f46e5; transform: translateY(-2px); }
+        .glass-card { background: white; border: 1px solid #e2e8f0; border-radius: 2rem; }
     </style>
 </head>
-<body>
+<body class="flex">
 
-    <aside class="fixed left-0 top-0 h-screen w-64 bg-slate-900 text-white p-6 z-50">
-        <div class="text-2xl font-black text-indigo-400 mb-10 tracking-tight italic">EDU.<span class="text-white">FLOW</span></div>
-        <nav class="space-y-2">
-            <button onclick="showTab('dashboard')" class="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-slate-800 transition text-left">🏠 Обучение</button>
-            <button onclick="showTab('profile')" class="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-slate-800 transition text-left">👤 Настройки</button>
-            <button onclick="showTab('store')" class="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-slate-800 transition text-left">⚡ Баланс</button>
+    <aside class="w-64 h-screen bg-slate-900 text-white p-6 fixed">
+        <div class="text-2xl font-black text-indigo-400 mb-10 italic">EDU.FLOW</div>
+        <nav class="space-y-4">
+            <button onclick="showTab('dashboard')" class="w-full text-left p-3 hover:bg-slate-800 rounded-xl">🏠 Главная</button>
+            <button onclick="showTab('profile')" class="w-full text-left p-3 hover:bg-slate-800 rounded-xl">👤 Профиль</button>
+            <button onclick="showTab('store')" class="w-full text-left p-3 hover:bg-slate-800 rounded-xl">⚡ Баланс</button>
         </nav>
-        <div class="absolute bottom-20 left-6 right-6 p-4 bg-slate-800 rounded-2xl border border-slate-700">
-            <p class="text-[10px] uppercase font-bold text-slate-500 mb-1">Время:</p>
-            <p class="text-xl font-bold text-indigo-400"><span id="balance-display">0</span> мин.</p>
+        <div class="absolute bottom-10 left-6 right-6 p-4 bg-slate-800 rounded-2xl">
+            <p class="text-[10px] uppercase text-slate-500 font-bold">Осталось времени:</p>
+            <p id="balance-display" class="text-xl font-bold text-indigo-400">0 мин.</p>
         </div>
-        <div id="debug-log" class="absolute bottom-4 left-6 right-6 text-slate-500 bg-black/20 p-2 rounded">Логи системы...</div>
     </aside>
 
-    <main class="ml-64 p-12">
+    <main class="ml-64 p-12 w-full">
+        
         <section id="dashboard" class="tab-content active">
-            <h1 class="text-3xl font-black text-slate-900 mb-8">Выбери приключение</h1>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="bg-white p-8 rounded-3xl border-2 border-transparent hover:border-indigo-500 cursor-pointer transition shadow-sm" onclick="startLesson('Математика', 'Киберпанк')">
+            <h1 class="text-4xl font-black mb-8 text-slate-900">Приключения</h1>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div onclick="startLesson('Математика', 'Киберпанк')" class="glass-card p-8 cursor-pointer hover:shadow-2xl transition">
                     <span class="text-5xl">🔋</span>
-                    <h3 class="text-2xl font-bold mt-4 text-slate-800">Математика</h3>
-                    <p class="text-slate-500">Мир неоновых вычислений</p>
+                    <h3 class="text-2xl font-bold mt-4">Математика</h3>
+                    <p class="text-slate-500">Сеттинг: Город будущего</p>
                 </div>
-                <div class="bg-white p-8 rounded-3xl border-2 border-transparent hover:border-indigo-500 cursor-pointer transition shadow-sm" onclick="startLesson('История', 'Викинги')">
+                <div onclick="startLesson('История', 'Древняя Греция')" class="glass-card p-8 cursor-pointer hover:shadow-2xl transition">
                     <span class="text-5xl">⚔️</span>
-                    <h3 class="text-2xl font-bold mt-4 text-slate-800">История</h3>
-                    <p class="text-slate-500">Эпоха великих завоеваний</p>
+                    <h3 class="text-2xl font-bold mt-4">История</h3>
+                    <p class="text-slate-500">Сеттинг: Мифы и герои</p>
                 </div>
             </div>
         </section>
 
         <section id="profile" class="tab-content">
-            <div class="max-w-2xl bg-white p-10 rounded-[2.5rem] shadow-xl border">
-                <h2 class="text-2xl font-bold mb-6">Профиль ИИ</h2>
+            <div class="max-w-xl glass-card p-10 shadow-lg">
+                <h2 class="text-2xl font-bold mb-6">Настройки ИИ</h2>
                 <div class="space-y-4">
-                    <input type="password" id="api-key" class="w-full p-4 bg-slate-50 rounded-xl outline-none ring-1 ring-slate-200 focus:ring-2 focus:ring-indigo-500" placeholder="Gemini API Key">
+                    <label class="block text-sm font-bold text-slate-400">API КЛЮЧ GEMINI</label>
+                    <input type="password" id="api-key" class="w-full p-4 bg-slate-50 border rounded-xl outline-none focus:ring-2 ring-indigo-400" placeholder="Вставь ключ от Google">
+                    
                     <div class="grid grid-cols-2 gap-4">
-                        <input type="number" id="user-age" class="p-4 bg-slate-50 rounded-xl outline-none ring-1 ring-slate-200" placeholder="Возраст">
-                        <input type="text" id="user-grade" class="p-4 bg-slate-50 rounded-xl outline-none ring-1 ring-slate-200" placeholder="Класс">
+                        <input type="number" id="age" class="p-4 bg-slate-50 border rounded-xl" placeholder="Твой возраст">
+                        <input type="text" id="grade" class="p-4 bg-slate-50 border rounded-xl" placeholder="Класс">
                     </div>
-                    <input type="text" id="user-interests" class="w-full p-4 bg-slate-50 rounded-xl outline-none ring-1 ring-slate-200" placeholder="Твои интересы">
-                    <button onclick="saveProfile()" class="w-full py-4 bg-slate-900 text-white rounded-2xl font-bold hover:bg-indigo-600 transition">СОХРАНИТЬ</button>
+                    
+                    <button onclick="saveProfile()" class="w-full btn-main p-4 font-bold">СОХРАНИТЬ</button>
+                    <p class="text-xs text-slate-400 text-center mt-2">Прокси подключен автоматически: ✅</p>
                 </div>
             </div>
         </section>
 
-        <section id="store" class="tab-content">
-            <div class="max-w-sm mx-auto bg-white p-10 rounded-[3rem] text-center border-4 border-indigo-500">
-                <h3 class="text-xl font-bold mb-2">ПОКУПКА ВРЕМЕНИ</h3>
-                <p class="text-5xl font-black mb-8">400 ₽</p>
-                <button onclick="processPayment()" class="w-full py-4 bg-indigo-600 text-white rounded-2xl font-bold shadow-lg">ДОБАВИТЬ +60 МИН</button>
+        <section id="store" class="tab-content text-center">
+            <div class="max-w-sm mx-auto glass-card p-10 border-4 border-indigo-500">
+                <h3 class="font-bold text-indigo-500 mb-2">ДОСТУП К ИИ</h3>
+                <p class="text-6xl font-black mb-8">400 ₽</p>
+                <button onclick="addTime()" class="w-full btn-main p-5 text-lg uppercase tracking-widest">Купить 60 минут</button>
             </div>
         </section>
 
         <section id="loading" class="tab-content text-center py-20">
-            <div class="loader ease-linear rounded-full border-8 border-t-8 border-slate-200 h-24 w-24 mb-8 mx-auto"></div>
-            <h2 class="text-2xl font-bold text-slate-900">Пробиваем тоннель к ИИ...</h2>
-            <p id="loading-status" class="text-slate-400 mt-2 italic">Попытка 1: Поиск лазейки...</p>
+            <div class="animate-spin rounded-full h-20 w-20 border-b-4 border-indigo-600 mx-auto mb-6"></div>
+            <h2 class="text-2xl font-bold">Генерируем квест через прокси...</h2>
         </section>
 
         <section id="learning" class="tab-content">
-            <div class="max-w-4xl mx-auto bg-white p-12 rounded-[3rem] shadow-2xl border">
-                <h2 id="ai-quest-title" class="text-4xl font-black mb-6 italic text-slate-900"></h2>
-                <div id="ai-content" class="text-xl text-slate-600 leading-relaxed mb-10"></div>
-                <div class="flex gap-4 bg-slate-50 p-2 rounded-3xl border">
-                    <input type="text" id="ans" class="flex-1 bg-transparent p-4 outline-none text-xl" placeholder="Твой ответ...">
-                    <button onclick="checkAnswer()" class="bg-slate-900 text-white px-10 rounded-2xl font-bold hover:bg-indigo-600 transition">ОТВЕТИТЬ</button>
+            <div class="max-w-4xl mx-auto glass-card p-12 shadow-2xl">
+                <h2 id="q-title" class="text-4xl font-black mb-6 italic"></h2>
+                <div id="q-text" class="text-xl text-slate-600 mb-10 leading-relaxed"></div>
+                <div class="flex gap-4">
+                    <input type="text" id="user-ans" class="flex-1 p-5 bg-slate-100 rounded-2xl text-xl outline-none border-2 focus:border-indigo-500" placeholder="Введите число-ответ...">
+                    <button onclick="checkAns()" class="btn-main px-12 text-xl font-black">ОТПРАВИТЬ</button>
                 </div>
             </div>
         </section>
     </main>
 
     <script>
-        let balance = parseInt(localStorage.getItem('user_balance')) || 0;
+        // ТВОЙ ЛИЧНЫЙ ПРОКСИ (ВШИТ НАВСЕГДА)
+        const MY_PROXY = "https://gemini-proxy.artemdenis00000.workers.dev";
+        
+        let balance = parseInt(localStorage.getItem('edu_bal')) || 0;
         let correctAnswer = "";
 
-        const log = (msg) => {
-            const el = document.getElementById('debug-log');
-            el.innerHTML += `> ${msg}<br>`;
-            el.scrollTop = el.scrollHeight;
-        };
-
         window.onload = () => {
-            const profile = JSON.parse(localStorage.getItem('user_profile')) || {};
-            document.getElementById('user-age').value = profile.age || '';
-            document.getElementById('user-grade').value = profile.grade || '';
-            document.getElementById('user-interests').value = profile.interests || '';
-            document.getElementById('api-key').value = localStorage.getItem('gemini_key') || '';
-            document.getElementById('balance-display').innerText = balance;
+            document.getElementById('api-key').value = localStorage.getItem('edu_key') || '';
+            document.getElementById('age').value = localStorage.getItem('edu_age') || '';
+            document.getElementById('balance-display').innerText = balance + ' мин.';
         };
 
         function showTab(id) {
@@ -114,99 +110,70 @@
         }
 
         function saveProfile() {
-            localStorage.setItem('user_profile', JSON.stringify({
-                age: document.getElementById('user-age').value,
-                grade: document.getElementById('user-grade').value,
-                interests: document.getElementById('user-interests').value
-            }));
-            localStorage.setItem('gemini_key', document.getElementById('api-key').value.trim());
-            alert("Данные обновлены!");
+            localStorage.setItem('edu_key', document.getElementById('api-key').value.trim());
+            localStorage.setItem('edu_age', document.getElementById('age').value);
+            alert("Данные сохранены!");
             showTab('dashboard');
         }
 
-        function processPayment() {
+        function addTime() {
             balance += 60;
-            localStorage.setItem('user_balance', balance);
-            document.getElementById('balance-display').innerText = balance;
-            alert("Баланс: +60 минут!");
+            localStorage.setItem('edu_bal', balance);
+            document.getElementById('balance-display').innerText = balance + ' мин.';
+            alert("Баланс пополнен!");
             showTab('dashboard');
-        }
-
-        // Умная функция запроса через разные прокси
-        async function smartFetch(key, prompt) {
-            const body = JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] });
-            const target = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${key}`;
-            
-            // Список прокси-серверов
-            const proxies = [
-                (url) => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
-                (url) => `https://corsproxy.io/?${encodeURIComponent(url)}`,
-                (url) => `https://thingproxy.freeboard.io/fetch/${url}`
-            ];
-
-            for (let i = 0; i < proxies.length; i++) {
-                try {
-                    const proxyUrl = proxies[i](target);
-                    log(`Пробую прокси #${i+1}...`);
-                    document.getElementById('loading-status').innerText = `Попытка ${i+1}: Обход блокировки...`;
-
-                    const res = await fetch(proxyUrl, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: body
-                    });
-
-                    if (res.ok) {
-                        const data = await res.json();
-                        if (data.candidates) {
-                            log(`Успех на прокси #${i+1}!`);
-                            return data;
-                        }
-                    }
-                } catch (err) {
-                    log(`Прокси #${i+1} не сработал.`);
-                }
-            }
-            throw new Error("Все пути заблокированы. Google слишком силен.");
         }
 
         async function startLesson(subject, setting) {
-            const key = localStorage.getItem('gemini_key');
-            const profile = JSON.parse(localStorage.getItem('user_profile')) || {};
+            const key = localStorage.getItem('edu_key');
+            const age = localStorage.getItem('edu_age') || '12';
 
-            if (!key) return alert("Введите ключ!");
+            if (!key) return alert("Сначала вставь API-ключ в Профиле!");
             if (balance <= 0) return showTab('store');
 
             showTab('loading');
 
-            const prompt = `Ты ИИ репетитор. Создай квест для ученика ${profile.age} лет. 
+            // Запрос летит в твой Cloudflare Worker
+            const url = `${MY_PROXY}/v1beta/models/gemini-1.5-flash:generateContent?key=${key}`;
+            
+            const prompt = `Ты ИИ репетитор. Создай образовательный квест для ребенка ${age} лет. 
                             Предмет: ${subject}. Сеттинг: ${setting}. 
-                            Выдай ТОЛЬКО чистый JSON: {"title": "Название", "text": "Сюжет и ОДНА задача (ответ число)", "answer": "число"}`;
+                            Выдай СТРОГО чистый JSON (без разметки): {"title": "Название", "text": "Текст квеста и ОДНО задание", "answer": "число"}`;
 
             try {
-                const data = await smartFetch(key, prompt);
+                const res = await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
+                });
+
+                const data = await res.json();
+                
+                if (!data.candidates) throw new Error("Google отклонил запрос. Проверь API-ключ.");
+
                 const rawText = data.candidates[0].content.parts[0].text;
                 const cleanJson = JSON.parse(rawText.replace(/```json|```/gi, "").trim());
 
-                document.getElementById('ai-quest-title').innerText = cleanJson.title;
-                document.getElementById('ai-content').innerText = cleanJson.text;
+                document.getElementById('q-title').innerText = cleanJson.title;
+                document.getElementById('q-text').innerText = cleanJson.text;
                 correctAnswer = cleanJson.answer.toString();
                 
                 showTab('learning');
             } catch (e) {
-                log(`Критическая ошибка: ${e.message}`);
-                alert("Ошибка соединения. Google блокирует запрос. Попробуй нажать еще раз.");
-                showTab('dashboard');
+                console.error(e);
+                alert("Ошибка ИИ: " + e.message + "\nПроверь баланс и ключ.");
+                showTab('profile');
             }
         }
 
-        function checkAnswer() {
-            if (document.getElementById('ans').value.trim() === correctAnswer) {
-                alert("ВЕРНО! Ты справился.");
+        function checkAns() {
+            const userVal = document.getElementById('user-ans').value.trim();
+            if (userVal === correctAnswer) {
+                alert("МОЛОДЕЦ! Правильный ответ.");
                 showTab('dashboard');
-                document.getElementById('ans').value = "";
+                document.getElementById('user-ans').value = "";
             } else {
-                alert("Неправильно. Попробуй еще!");
+                alert("Неверно, попробуй еще раз!");
             }
         }
     </script>
