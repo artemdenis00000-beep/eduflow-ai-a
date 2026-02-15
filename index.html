@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EduFlow | Без VPN</title>
+    <title>EduFlow Pro | Anti-Block Edition</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; background-color: #f1f5f9; }
         .tab-content { display: none; }
         .tab-content.active { display: block; }
-        .glass-card { background: white; border: 1px solid #e2e8f0; transition: all 0.3s ease; }
         .loader { border-top-color: #6366f1; animation: spinner 1.5s linear infinite; }
         @keyframes spinner { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        #debug-log { font-family: monospace; font-size: 10px; max-height: 100px; overflow-y: auto; }
     </style>
 </head>
 <body>
@@ -20,70 +20,69 @@
     <aside class="fixed left-0 top-0 h-screen w-64 bg-slate-900 text-white p-6 z-50">
         <div class="text-2xl font-black text-indigo-400 mb-10 tracking-tight italic">EDU.<span class="text-white">FLOW</span></div>
         <nav class="space-y-2">
-            <button onclick="showTab('dashboard')" class="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-slate-800 transition">🏠 Дашборд</button>
-            <button onclick="showTab('profile')" class="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-slate-800 transition">👤 Профиль</button>
-            <button onclick="showTab('store')" class="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-slate-800 transition">⚡ Магазин</button>
+            <button onclick="showTab('dashboard')" class="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-slate-800 transition text-left">🏠 Обучение</button>
+            <button onclick="showTab('profile')" class="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-slate-800 transition text-left">👤 Настройки</button>
+            <button onclick="showTab('store')" class="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-slate-800 transition text-left">⚡ Баланс</button>
         </nav>
-        <div class="absolute bottom-8 left-6 right-6 p-4 bg-slate-800 rounded-2xl border border-slate-700">
-            <p class="text-[10px] uppercase font-bold text-slate-500 mb-1">Доступно:</p>
+        <div class="absolute bottom-20 left-6 right-6 p-4 bg-slate-800 rounded-2xl border border-slate-700">
+            <p class="text-[10px] uppercase font-bold text-slate-500 mb-1">Время:</p>
             <p class="text-xl font-bold text-indigo-400"><span id="balance-display">0</span> мин.</p>
         </div>
+        <div id="debug-log" class="absolute bottom-4 left-6 right-6 text-slate-500 bg-black/20 p-2 rounded">Логи системы...</div>
     </aside>
 
     <main class="ml-64 p-12">
-        
         <section id="dashboard" class="tab-content active">
-            <h1 class="text-3xl font-black text-slate-900 mb-8">Мои Курсы</h1>
+            <h1 class="text-3xl font-black text-slate-900 mb-8">Выбери приключение</h1>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="glass-card p-8 rounded-3xl cursor-pointer" onclick="startLesson('Математика', 'Космос')">
-                    <span class="text-5xl">🧮</span>
-                    <h3 class="text-2xl font-bold mt-4">Математика</h3>
-                    <p class="text-slate-500">Сеттинг: Космическая станция</p>
+                <div class="bg-white p-8 rounded-3xl border-2 border-transparent hover:border-indigo-500 cursor-pointer transition shadow-sm" onclick="startLesson('Математика', 'Киберпанк')">
+                    <span class="text-5xl">🔋</span>
+                    <h3 class="text-2xl font-bold mt-4 text-slate-800">Математика</h3>
+                    <p class="text-slate-500">Мир неоновых вычислений</p>
                 </div>
-                <div class="glass-card p-8 rounded-3xl cursor-pointer" onclick="startLesson('История', 'Древний Египет')">
-                    <span class="text-5xl">🏛️</span>
-                    <h3 class="text-2xl font-bold mt-4">История</h3>
-                    <p class="text-slate-500">Сеттинг: Пирамиды и загадки</p>
+                <div class="bg-white p-8 rounded-3xl border-2 border-transparent hover:border-indigo-500 cursor-pointer transition shadow-sm" onclick="startLesson('История', 'Викинги')">
+                    <span class="text-5xl">⚔️</span>
+                    <h3 class="text-2xl font-bold mt-4 text-slate-800">История</h3>
+                    <p class="text-slate-500">Эпоха великих завоеваний</p>
                 </div>
             </div>
         </section>
 
         <section id="profile" class="tab-content">
-            <div class="max-w-2xl bg-white p-10 rounded-[2.5rem] shadow-sm border">
-                <h2 class="text-2xl font-bold mb-6">Настройки</h2>
+            <div class="max-w-2xl bg-white p-10 rounded-[2.5rem] shadow-xl border">
+                <h2 class="text-2xl font-bold mb-6">Профиль ИИ</h2>
                 <div class="space-y-4">
-                    <label class="text-xs font-bold text-slate-400 uppercase">API Ключ Gemini</label>
-                    <input type="password" id="api-key" class="w-full p-4 bg-slate-50 rounded-xl outline-none ring-1 ring-slate-200" placeholder="Вставь ключ">
+                    <input type="password" id="api-key" class="w-full p-4 bg-slate-50 rounded-xl outline-none ring-1 ring-slate-200 focus:ring-2 focus:ring-indigo-500" placeholder="Gemini API Key">
                     <div class="grid grid-cols-2 gap-4">
                         <input type="number" id="user-age" class="p-4 bg-slate-50 rounded-xl outline-none ring-1 ring-slate-200" placeholder="Возраст">
                         <input type="text" id="user-grade" class="p-4 bg-slate-50 rounded-xl outline-none ring-1 ring-slate-200" placeholder="Класс">
                     </div>
-                    <input type="text" id="user-interests" class="w-full p-4 bg-slate-50 rounded-xl outline-none ring-1 ring-slate-200" placeholder="Что ты любишь?">
-                    <button onclick="saveProfile()" class="w-full py-4 bg-slate-900 text-white rounded-2xl font-bold">СОХРАНИТЬ</button>
+                    <input type="text" id="user-interests" class="w-full p-4 bg-slate-50 rounded-xl outline-none ring-1 ring-slate-200" placeholder="Твои интересы">
+                    <button onclick="saveProfile()" class="w-full py-4 bg-slate-900 text-white rounded-2xl font-bold hover:bg-indigo-600 transition">СОХРАНИТЬ</button>
                 </div>
             </div>
         </section>
 
         <section id="store" class="tab-content">
-            <div class="max-w-sm mx-auto glass-card p-10 rounded-[3rem] text-center border-2 border-indigo-500 shadow-xl">
-                <h3 class="text-xl font-bold mb-2">ПОПОЛНИТЬ БАЛАНС</h3>
-                <p class="text-5xl font-black mb-8 italic text-slate-900">400 ₽</p>
-                <button onclick="processPayment()" class="w-full py-4 bg-indigo-600 text-white rounded-2xl font-bold">ДОБАВИТЬ 60 МИНУТ</button>
+            <div class="max-w-sm mx-auto bg-white p-10 rounded-[3rem] text-center border-4 border-indigo-500">
+                <h3 class="text-xl font-bold mb-2">ПОКУПКА ВРЕМЕНИ</h3>
+                <p class="text-5xl font-black mb-8">400 ₽</p>
+                <button onclick="processPayment()" class="w-full py-4 bg-indigo-600 text-white rounded-2xl font-bold shadow-lg">ДОБАВИТЬ +60 МИН</button>
             </div>
         </section>
 
         <section id="loading" class="tab-content text-center py-20">
             <div class="loader ease-linear rounded-full border-8 border-t-8 border-slate-200 h-24 w-24 mb-8 mx-auto"></div>
-            <h2 class="text-2xl font-bold text-slate-900">Прокси-сервер обходит блокировки...</h2>
-            <p class="text-slate-400 mt-2">VPN больше не нужен!</p>
+            <h2 class="text-2xl font-bold text-slate-900">Пробиваем тоннель к ИИ...</h2>
+            <p id="loading-status" class="text-slate-400 mt-2 italic">Попытка 1: Поиск лазейки...</p>
         </section>
 
         <section id="learning" class="tab-content">
-            <div class="max-w-4xl mx-auto bg-white p-12 rounded-[3rem] shadow-xl border">
+            <div class="max-w-4xl mx-auto bg-white p-12 rounded-[3rem] shadow-2xl border">
                 <h2 id="ai-quest-title" class="text-4xl font-black mb-6 italic text-slate-900"></h2>
                 <div id="ai-content" class="text-xl text-slate-600 leading-relaxed mb-10"></div>
-                <div class="flex gap-4">
-                    <input type="text" id="ans" class="flex-1 bg-slate-50 p-4 rounded-2xl outline-none border focus:ring-2 ring-indigo-400" placeholder="Ответ...">
+                <div class="flex gap-4 bg-slate-50 p-2 rounded-3xl border">
+                    <input type="text" id="ans" class="flex-1 bg-transparent p-4 outline-none text-xl" placeholder="Твой ответ...">
                     <button onclick="checkAnswer()" class="bg-slate-900 text-white px-10 rounded-2xl font-bold hover:bg-indigo-600 transition">ОТВЕТИТЬ</button>
                 </div>
             </div>
@@ -93,6 +92,12 @@
     <script>
         let balance = parseInt(localStorage.getItem('user_balance')) || 0;
         let correctAnswer = "";
+
+        const log = (msg) => {
+            const el = document.getElementById('debug-log');
+            el.innerHTML += `> ${msg}<br>`;
+            el.scrollTop = el.scrollHeight;
+        };
 
         window.onload = () => {
             const profile = JSON.parse(localStorage.getItem('user_profile')) || {};
@@ -115,7 +120,7 @@
                 interests: document.getElementById('user-interests').value
             }));
             localStorage.setItem('gemini_key', document.getElementById('api-key').value.trim());
-            alert("Настройки сохранены!");
+            alert("Данные обновлены!");
             showTab('dashboard');
         }
 
@@ -127,49 +132,59 @@
             showTab('dashboard');
         }
 
-        // Ключевая функция обхода блокировок
-        async function getAiResponse(key, promptText) {
-            // Список моделей для проверки
-            const models = ["gemini-1.5-flash", "gemini-1.5-pro", "gemini-pro"];
+        // Умная функция запроса через разные прокси
+        async function smartFetch(key, prompt) {
+            const body = JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] });
+            const target = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${key}`;
             
-            for (let model of models) {
+            // Список прокси-серверов
+            const proxies = [
+                (url) => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
+                (url) => `https://corsproxy.io/?${encodeURIComponent(url)}`,
+                (url) => `https://thingproxy.freeboard.io/fetch/${url}`
+            ];
+
+            for (let i = 0; i < proxies.length; i++) {
                 try {
-                    // Используем прокси-сервер corsproxy.io
-                    const targetUrl = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${key}`;
-                    const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(targetUrl)}`;
+                    const proxyUrl = proxies[i](target);
+                    log(`Пробую прокси #${i+1}...`);
+                    document.getElementById('loading-status').innerText = `Попытка ${i+1}: Обход блокировки...`;
 
                     const res = await fetch(proxyUrl, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ contents: [{ parts: [{ text: promptText }] }] })
+                        body: body
                     });
 
                     if (res.ok) {
                         const data = await res.json();
-                        if (data.candidates && data.candidates[0]) return data;
+                        if (data.candidates) {
+                            log(`Успех на прокси #${i+1}!`);
+                            return data;
+                        }
                     }
-                } catch (e) {
-                    console.warn(`Модель ${model} не подошла, пробую следующую...`);
+                } catch (err) {
+                    log(`Прокси #${i+1} не сработал.`);
                 }
             }
-            throw new Error("Ни одна модель не ответила. Проверь ключ или прокси.");
+            throw new Error("Все пути заблокированы. Google слишком силен.");
         }
 
         async function startLesson(subject, setting) {
             const key = localStorage.getItem('gemini_key');
             const profile = JSON.parse(localStorage.getItem('user_profile')) || {};
 
-            if (!key) return alert("Вставь API-ключ!");
+            if (!key) return alert("Введите ключ!");
             if (balance <= 0) return showTab('store');
 
             showTab('loading');
 
             const prompt = `Ты ИИ репетитор. Создай квест для ученика ${profile.age} лет. 
                             Предмет: ${subject}. Сеттинг: ${setting}. 
-                            Выдай ТОЛЬКО JSON: {"title": "Название", "text": "Сюжет и ОДНА задача (ответ число)", "answer": "число"}`;
+                            Выдай ТОЛЬКО чистый JSON: {"title": "Название", "text": "Сюжет и ОДНА задача (ответ число)", "answer": "число"}`;
 
             try {
-                const data = await getAiResponse(key, prompt);
+                const data = await smartFetch(key, prompt);
                 const rawText = data.candidates[0].content.parts[0].text;
                 const cleanJson = JSON.parse(rawText.replace(/```json|```/gi, "").trim());
 
@@ -179,18 +194,19 @@
                 
                 showTab('learning');
             } catch (e) {
-                alert("Ошибка ИИ: " + e.message + "\nПопробуй нажать еще раз через 5 секунд.");
+                log(`Критическая ошибка: ${e.message}`);
+                alert("Ошибка соединения. Google блокирует запрос. Попробуй нажать еще раз.");
                 showTab('dashboard');
             }
         }
 
         function checkAnswer() {
             if (document.getElementById('ans').value.trim() === correctAnswer) {
-                alert("КРУТО! Правильно.");
+                alert("ВЕРНО! Ты справился.");
                 showTab('dashboard');
                 document.getElementById('ans').value = "";
             } else {
-                alert("Ошибка! Подумай еще.");
+                alert("Неправильно. Попробуй еще!");
             }
         }
     </script>
