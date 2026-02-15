@@ -3,200 +3,152 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EduFlow | Final Debug</title>
+    <title>EduFlow | Anti-Region Fix</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #f1f5f9; }
-        .tab-content { display: none; }
+        body { font-family: 'Inter', sans-serif; background: #f8fafc; margin: 0; display: flex; }
+        .tab-content { display: none; width: 100%; }
         .tab-content.active { display: block; }
-        .btn-main { background: #111827; color: white; transition: all 0.2s; border-radius: 1rem; }
-        .btn-main:hover { background: #4f46e5; transform: translateY(-2px); }
-        .glass-card { background: white; border: 1px solid #e2e8f0; border-radius: 2rem; }
+        aside { width: 260px; height: 100vh; background: #0f172a; color: white; padding: 2rem; position: fixed; }
+        main { margin-left: 260px; padding: 3rem; width: 100%; }
+        .card { background: white; padding: 2rem; border-radius: 1.5rem; border: 1px solid #e2e8f0; }
+        .btn { background: #4f46e5; color: white; padding: 1rem 2rem; border-radius: 1rem; font-weight: bold; cursor: pointer; border: none; width: 100%; transition: 0.2s; }
+        .btn:hover { background: #4338ca; }
     </style>
 </head>
-<body class="flex">
+<body>
 
-    <aside class="w-64 h-screen bg-slate-900 text-white p-6 fixed shadow-2xl">
-        <div class="text-2xl font-black text-indigo-400 mb-10 italic tracking-tighter">EDU.FLOW</div>
-        <nav class="space-y-4">
-            <button onclick="showTab('dashboard')" class="w-full text-left p-3 hover:bg-slate-800 rounded-xl transition">🏠 Приключения</button>
-            <button onclick="showTab('profile')" class="w-full text-left p-3 hover:bg-slate-800 rounded-xl transition">👤 Мой Профиль</button>
-            <button onclick="showTab('store')" class="w-full text-left p-3 hover:bg-slate-800 rounded-xl transition">⚡ Магазин</button>
+    <aside>
+        <h2 class="text-2xl font-black text-indigo-400 mb-10">EDU.FLOW</h2>
+        <nav class="space-y-2">
+            <button onclick="showTab('dash')" class="w-full text-left p-3 rounded-lg hover:bg-slate-800">🏠 Главная</button>
+            <button onclick="showTab('prof')" class="w-full text-left p-3 rounded-lg hover:bg-slate-800">👤 Профиль</button>
         </nav>
-        <div class="absolute bottom-10 left-6 right-6 p-4 bg-slate-800 rounded-2xl border border-slate-700">
-            <p class="text-[10px] uppercase text-slate-500 font-bold mb-1">Баланс обучения:</p>
-            <p id="balance-display" class="text-xl font-bold text-indigo-400">0 мин.</p>
+        <div class="mt-20 p-4 bg-slate-800 rounded-xl">
+            <p class="text-xs text-slate-400 uppercase">Баланс:</p>
+            <p id="bal-text" class="text-xl font-bold text-indigo-400">0 мин.</p>
         </div>
     </aside>
 
-    <main class="ml-64 p-12 w-full">
-        
-        <section id="dashboard" class="tab-content active">
-            <h1 class="text-4xl font-black mb-8 text-slate-900">Выбери предмет</h1>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div onclick="startLesson('Математика', 'Космос')" class="glass-card p-8 cursor-pointer hover:shadow-2xl hover:border-indigo-400 border-2 border-transparent transition group">
-                    <span class="text-6xl group-hover:scale-110 transition inline-block">🚀</span>
-                    <h3 class="text-2xl font-bold mt-4">Математика</h3>
-                    <p class="text-slate-500">Сеттинг: Космическая база</p>
+    <main>
+        <section id="dash" class="tab-content active">
+            <h1 class="text-3xl font-bold mb-6">Твои курсы</h1>
+            <div class="grid grid-cols-2 gap-6">
+                <div onclick="start('Математика')" class="card cursor-pointer hover:border-indigo-500 transition text-center">
+                    <div class="text-5xl mb-4">📐</div>
+                    <div class="font-bold text-xl">Математика</div>
                 </div>
-                <div onclick="startLesson('История', 'Пираты')" class="glass-card p-8 cursor-pointer hover:shadow-2xl hover:border-indigo-400 border-2 border-transparent transition group">
-                    <span class="text-6xl group-hover:scale-110 transition inline-block">🏴‍☠️</span>
-                    <h3 class="text-2xl font-bold mt-4">История</h3>
-                    <p class="text-slate-500">Сеттинг: Остров сокровищ</p>
+                <div onclick="start('История')" class="card cursor-pointer hover:border-indigo-500 transition text-center">
+                    <div class="text-5xl mb-4">📜</div>
+                    <div class="font-bold text-xl">История</div>
                 </div>
             </div>
         </section>
 
-        <section id="profile" class="tab-content">
-            <div class="max-w-2xl glass-card p-10 shadow-xl">
-                <h2 class="text-3xl font-black mb-8">Настройки профиля</h2>
-                <div class="space-y-6">
-                    <div>
-                        <label class="block text-xs font-bold text-slate-400 uppercase mb-2">Google API Ключ</label>
-                        <input type="password" id="api-key" class="w-full p-4 bg-slate-50 border rounded-2xl outline-none focus:ring-2 ring-indigo-400" placeholder="AI Ключ">
-                    </div>
-                    
-                    <div class="grid grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-xs font-bold text-slate-400 uppercase mb-2">Возраст</label>
-                            <input type="number" id="age" class="w-full p-4 bg-slate-50 border rounded-2xl" placeholder="Напр: 14">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold text-slate-400 uppercase mb-2">Класс</label>
-                            <input type="text" id="grade" class="w-full p-4 bg-slate-50 border rounded-2xl" placeholder="Напр: 8-А">
-                        </div>
-                    </div>
-
-                    <div>
-                        <label class="block text-xs font-bold text-slate-400 uppercase mb-2">Твои увлечения</label>
-                        <input type="text" id="interests" class="w-full p-4 bg-slate-50 border rounded-2xl outline-none focus:ring-2 ring-indigo-400" placeholder="Напр: футбол, Minecraft, музыка">
-                    </div>
-                    
-                    <button onclick="saveProfile()" class="w-full btn-main p-5 text-lg font-black shadow-lg shadow-indigo-200">СОХРАНИТЬ ДАННЫЕ</button>
-                </div>
+        <section id="prof" class="tab-content">
+            <div class="max-w-md card">
+                <h2 class="text-xl font-bold mb-4">Настройки</h2>
+                <input type="password" id="key" class="w-full p-3 border rounded-lg mb-4" placeholder="Gemini API Key">
+                <input type="text" id="age" class="w-full p-3 border rounded-lg mb-4" placeholder="Возраст">
+                <input type="text" id="interests" class="w-full p-3 border rounded-lg mb-4" placeholder="Увлечения (игры, спорт...)">
+                <button onclick="save()" class="btn">СОХРАНИТЬ</button>
+                <button onclick="topup()" class="btn mt-4 bg-slate-200 !text-slate-800">ПОПОЛНИТЬ БАЛАНС</button>
             </div>
         </section>
 
-        <section id="store" class="tab-content">
-            <div class="max-w-sm mx-auto glass-card p-10 text-center border-4 border-indigo-500 shadow-2xl">
-                <div class="w-20 h-20 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-6 text-4xl">⚡</div>
-                <h3 class="font-bold text-slate-400 mb-2 tracking-widest">ДОСТУП К ИИ</h3>
-                <p class="text-6xl font-black mb-8 text-slate-900">400 ₽</p>
-                <button onclick="addTime()" class="w-full btn-main p-5 text-xl font-black uppercase">Купить 60 минут</button>
-            </div>
+        <section id="load" class="tab-content text-center">
+            <div class="animate-spin text-5xl mb-4">⏳</div>
+            <h2 class="text-2xl font-bold">ИИ генерирует задачу...</h2>
         </section>
 
-        <section id="loading" class="tab-content text-center py-24">
-            <div class="animate-spin rounded-full h-24 w-24 border-b-4 border-indigo-600 mx-auto mb-8"></div>
-            <h2 class="text-3xl font-black text-slate-900 mb-2">Связываемся с ИИ...</h2>
-            <p class="text-slate-400">Используем ваш личный прокси-сервер</p>
-        </section>
-
-        <section id="learning" class="tab-content">
-            <div class="max-w-4xl mx-auto glass-card p-12 shadow-2xl relative overflow-hidden">
-                <div class="absolute top-0 left-0 w-2 h-full bg-indigo-600"></div>
-                <h2 id="q-title" class="text-4xl font-black mb-6 text-slate-900"></h2>
-                <div id="q-text" class="text-xl text-slate-600 mb-12 leading-relaxed bg-slate-50 p-6 rounded-3xl border border-slate-100 italic"></div>
-                <div class="flex gap-4">
-                    <input type="text" id="user-ans" class="flex-1 p-6 bg-white border-2 border-slate-200 rounded-3xl text-2xl font-bold outline-none focus:border-indigo-500 transition shadow-inner" placeholder="Твой ответ...">
-                    <button onclick="checkAns()" class="btn-main px-12 text-2xl font-black shadow-xl">ПРОВЕРИТЬ</button>
+        <section id="quest" class="tab-content">
+            <div class="max-w-2xl card mx-auto">
+                <h2 id="q-title" class="text-3xl font-bold mb-4"></h2>
+                <p id="q-text" class="text-lg text-slate-600 mb-6"></p>
+                <div class="flex gap-2">
+                    <input type="text" id="ans" class="flex-1 p-3 border rounded-lg" placeholder="Ответ...">
+                    <button onclick="check()" class="btn !w-auto">ОТПРАВИТЬ</button>
                 </div>
             </div>
         </section>
     </main>
 
     <script>
-        const MY_PROXY = "https://gemini-proxy.artemdenis00000.workers.dev";
-        let balance = parseInt(localStorage.getItem('edu_bal')) || 0;
-        let correctAnswer = "";
+        // ТВОЙ ПРОКСИ
+        const PROXY = "https://gemini-proxy.artemdenis00000.workers.dev";
+        
+        let balance = parseInt(localStorage.getItem('b')) || 0;
+        let targetAns = "";
 
         window.onload = () => {
-            document.getElementById('api-key').value = localStorage.getItem('edu_key') || '';
-            document.getElementById('age').value = localStorage.getItem('edu_age') || '';
-            document.getElementById('grade').value = localStorage.getItem('edu_grade') || '';
-            document.getElementById('interests').value = localStorage.getItem('edu_interests') || '';
-            document.getElementById('balance-display').innerText = balance + ' мин.';
-        };
-
-        function showTab(id) {
-            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
+            document.getElementById('key').value = localStorage.getItem('k') || '';
+            document.getElementById('age').value = localStorage.getItem('a') || '';
+            document.getElementById('interests').value = localStorage.getItem('i') || '';
+            document.getElementById('bal-text').innerText = balance + ' мин.';
         }
 
-        function saveProfile() {
-            localStorage.setItem('edu_key', document.getElementById('api-key').value.trim());
-            localStorage.setItem('edu_age', document.getElementById('age').value);
-            localStorage.setItem('edu_grade', document.getElementById('grade').value);
-            localStorage.setItem('edu_interests', document.getElementById('interests').value);
-            alert("Профиль обновлен!");
-            showTab('dashboard');
+        function showTab(t) {
+            document.querySelectorAll('.tab-content').forEach(s => s.classList.remove('active'));
+            document.getElementById(t).classList.add('active');
         }
 
-        function addTime() {
+        function save() {
+            localStorage.setItem('k', document.getElementById('key').value);
+            localStorage.setItem('a', document.getElementById('age').value);
+            localStorage.setItem('i', document.getElementById('interests').value);
+            alert("Сохранено!");
+            showTab('dash');
+        }
+
+        function topup() {
             balance += 60;
-            localStorage.setItem('edu_bal', balance);
-            document.getElementById('balance-display').innerText = balance + ' мин.';
-            alert("Успешно пополнено на 60 минут!");
-            showTab('dashboard');
+            localStorage.setItem('b', balance);
+            document.getElementById('bal-text').innerText = balance + ' мин.';
+            alert("Баланс пополнен!");
         }
 
-        async function startLesson(subject, setting) {
-            const key = localStorage.getItem('edu_key');
-            const age = localStorage.getItem('edu_age') || '14';
-            const interests = localStorage.getItem('edu_interests') || 'игры';
+        async function start(subject) {
+            const k = localStorage.getItem('k');
+            if(!k) return alert("Введи ключ в профиле!");
+            if(balance <= 0) return alert("Пополни баланс!");
 
-            if (!key) return alert("Ошибка: Не введен API Ключ в профиле!");
-            if (balance <= 0) return showTab('store');
-
-            showTab('loading');
-
-            const url = `${MY_PROXY}/v1beta/models/gemini-1.5-flash:generateContent?key=${key}`;
-            const prompt = `Ты ИИ учитель. Создай задачу для ребенка ${age} лет. 
-                            Учитывай интересы: ${interests}. Предмет: ${subject}. Сеттинг: ${setting}. 
-                            Выдай СТРОГО чистый JSON: {"title": "Название", "text": "Текст", "answer": "число"}`;
+            showTab('load');
+            
+            const prompt = `Ребенок ${localStorage.getItem('a')} лет, любит ${localStorage.getItem('i')}. Создай задачу по предмету ${subject}. Ответ СТРОГО JSON: {"t":"Заголовок","d":"Задача","a":"число"}`;
 
             try {
-                const res = await fetch(url, {
+                const response = await fetch(`${PROXY}/v1beta/models/gemini-1.5-flash:generateContent?key=${k}`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
                 });
 
-                const data = await res.json();
+                const data = await response.json();
                 
-                // Глубокая проверка ошибок
-                if (data.error) {
-                    throw new Error(`Google API Error: ${data.error.message} (Код: ${data.error.status})`);
+                if(data.error) {
+                    throw new Error(data.error.message);
                 }
 
-                if (!data.candidates || data.candidates.length === 0) {
-                    throw new Error("ИИ не вернул вариантов ответа. Проверьте настройки ключа.");
-                }
+                const txt = data.candidates[0].content.parts[0].text.replace(/```json|```/g, '').trim();
+                const json = JSON.parse(txt);
 
-                const rawText = data.candidates[0].content.parts[0].text;
-                const cleanJson = JSON.parse(rawText.replace(/```json|```/gi, "").trim());
+                document.getElementById('q-title').innerText = json.t;
+                document.getElementById('q-text').innerText = json.d;
+                targetAns = json.a.toString();
+                showTab('quest');
 
-                document.getElementById('q-title').innerText = cleanJson.title;
-                document.getElementById('q-text').innerText = cleanJson.text;
-                correctAnswer = cleanJson.answer.toString();
-                
-                showTab('learning');
             } catch (e) {
-                console.error(e);
-                alert(`КРИТИЧЕСКАЯ ОШИБКА:\n${e.message}\n\nЧто делать:\n1. Убедись, что ключ Gemini правильный.\n2. Проверь статус ключа на AI Studio.`);
-                showTab('profile');
+                alert("ОШИБКА: " + e.message);
+                showTab('prof');
             }
         }
 
-        function checkAns() {
-            const userVal = document.getElementById('user-ans').value.trim();
-            if (userVal === correctAnswer) {
-                alert("ВЕЛИКОЛЕПНО! Это правильный ответ. +10 опыта.");
-                showTab('dashboard');
-                document.getElementById('user-ans').value = "";
+        function check() {
+            if(document.getElementById('ans').value.trim() === targetAns) {
+                alert("ВЕРНО!");
+                showTab('dash');
             } else {
-                alert("Увы, неверно. Попробуй посчитать еще раз!");
+                alert("НЕВЕРНО!");
             }
         }
     </script>
